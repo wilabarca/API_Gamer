@@ -26,7 +26,8 @@ export class GamerController {
       await this.service.createGamer(gamer);
       return res.status(201).json({ mensaje: 'Juego creado exitosamente' });
     } catch (error) {
-      return res.status(500).json({ error: 'Error al crear juego' });
+      console.error('❌ Error al crear juego:', error);
+      return res.status(500).json({ error: 'Error al crear juego', details: error instanceof Error ? error.message : 'Unknown error' });
     }
   }
 
@@ -35,6 +36,7 @@ export class GamerController {
       const gamers = await this.service.getAllGamers();
       return res.json(gamers);
     } catch (error) {
+      console.error('❌ Error al obtener juegos:', error);
       return res.status(500).json({ error: 'Error al obtener juegos' });
     }
   }
@@ -71,6 +73,7 @@ export class GamerController {
       await this.service.updateGamer(updated);
       return res.json({ mensaje: 'Juego actualizado exitosamente' });
     } catch (error) {
+      console.error('❌ Error al actualizar juego:', error);
       return res.status(500).json({ error: 'Error al actualizar juego' });
     }
   }
@@ -81,6 +84,7 @@ export class GamerController {
       await this.service.deleteGamer(id);
       return res.json({ mensaje: 'Juego eliminado exitosamente' });
     } catch (error) {
+      console.error('❌ Error al eliminar juego:', error);
       return res.status(500).json({ error: 'Error al eliminar juego' });
     }
   }
