@@ -32,8 +32,8 @@ app.get('/health', async (_, res) => {
       timestamp: new Date().toISOString()
     });
   } catch (error) {
-    res.json({
-      status: 'OK',
+    res.status(500).json({
+      status: 'ERROR',
       database: 'disconnected',
       error: error instanceof Error ? error.message : 'Unknown error',
       timestamp: new Date().toISOString()
@@ -54,17 +54,14 @@ export async function initializeRoutes() {
     await initDB();
     console.log('📦 Conexión MySQL lista');
 
-    // Inyección de dependencias - User
     const userRepository = new MySQLUserRepository(pool);
     const userService = new UserService(userRepository);
     const userController = new UserController(userService);
 
-    // Inyección de dependencias - Gamer
     const gamerRepository = new MySQLGamerRepository(pool);
     const gamerService = new GamerService(gamerRepository);
     const gamerController = new GamerController(gamerService);
 
-    // Registro de rutas
     RegisterUserRoutes(app, userController);
     RegisterGamerRoutes(app, gamerController);
 

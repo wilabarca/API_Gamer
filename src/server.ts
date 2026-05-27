@@ -20,7 +20,7 @@ async function startServer() {
       server.close(async () => {
         console.log('✅ Servidor HTTP cerrado');
         await closeConnection();
-        console.log('✅ Conexión MySQL cerrada');
+        console.log('✅ Pool MySQL cerrado');
         process.exit(0);
       });
     };

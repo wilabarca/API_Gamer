@@ -1,4 +1,3 @@
-// Infrastructure/Repositories/MySQLGamerRepository.ts
 import mysql from 'mysql2/promise';
 import crypto from 'crypto';
 import { Gamer } from '../../Domain/Entities/Gamer';
@@ -10,9 +9,9 @@ export class MySQLGamerRepository implements GamerRepository {
   async create(gamer: Gamer): Promise<Gamer> {
     const id = crypto.randomUUID();
     await this.db.execute(
-      `INSERT INTO gamers (id, titulo, genero, descripcion, plataforma, precio)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [id, gamer.titulo, gamer.genero, gamer.descripcion, gamer.plataforma, gamer.precio]
+      `INSERT INTO gamers (id, user_id, titulo, genero, descripcion, plataforma, precio)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [id, gamer.user_id, gamer.titulo, gamer.genero, gamer.descripcion, gamer.plataforma, gamer.precio]
     );
     return { ...gamer, id };
   }
@@ -27,6 +26,14 @@ export class MySQLGamerRepository implements GamerRepository {
 
   async getAll(): Promise<Gamer[]> {
     const [rows] = await this.db.execute<any[]>(`SELECT * FROM gamers`);
+    return rows;
+  }
+
+  async getByUserId(user_id: string): Promise<Gamer[]> {
+    const [rows] = await this.db.execute<any[]>(
+      `SELECT * FROM gamers WHERE user_id = ?`,
+      [user_id]
+    );
     return rows;
   }
 

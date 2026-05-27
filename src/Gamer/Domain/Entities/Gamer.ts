@@ -1,6 +1,6 @@
-// Domain/Entities/Game.ts
 export interface Gamer {
   id: string;
+  user_id: string;
   titulo: string;
   genero: string;
   descripcion: string;

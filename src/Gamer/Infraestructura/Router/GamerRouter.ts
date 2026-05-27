@@ -1,4 +1,3 @@
-// Infrastructure/Routes/GamerRoutes.ts
 import { Router } from 'express';
 import { GamerController } from '../Controllers/GamerControllers';
 

@@ -1,13 +1,11 @@
-// Application/GamerService.ts
 import { Gamer } from '../Domain/Entities/Gamer';
 import { GamerRepository } from '../Domain/Repositories/GamerRepository';
 
 export class GamerService {
   constructor(private repository: GamerRepository) {}
 
-  async createGamer(gamer: Gamer) {
-    const createdGamer = await this.repository.create(gamer);
-    return createdGamer;
+  createGamer(gamer: Gamer) {
+    return this.repository.create(gamer);
   }
 
   getGamerById(id: string) {
@@ -16,6 +14,10 @@ export class GamerService {
 
   getAllGamers() {
     return this.repository.getAll();
+  }
+
+  getGamersByUserId(user_id: string) {
+    return this.repository.getByUserId(user_id);
   }
 
   updateGamer(gamer: Gamer) {
